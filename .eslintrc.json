@@ -1,0 +1,24 @@
+{
+    "parser": "babel-eslint",
+    "extends": "shortlyster",
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+      "new-cap": [2, { "newIsCap": true, "capIsNew": false }],
+      "no-alert": "off",
+      "react/prefer-stateless-function": "off",
+      "import/no-extraneous-dependencies": "off",
+      "react/jsx-filename-extension": "off",
+      "generator-star-spacing": "off",
+      "import/no-named-as-default": "off",
+      "no-mixed-operators": "off",
+      "import/prefer-default-export": "off",
+      "react/no-string-refs": "off",
+      "jsx-a11y/label-has-for": "off"
+    },
+    "env": {
+      "mocha": true,
+      "browser": true
+    }
+}
