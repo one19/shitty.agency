@@ -3,6 +3,7 @@ const autoprefixer = require('autoprefixer');
 const precss = require('precss');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const {
   NODE_ENV = 'development',
@@ -34,6 +35,13 @@ const config = {
   postcss: [
     autoprefixer,
     precss
+  ],
+  plugins: [
+    new FaviconsWebpackPlugin('./components/images/favicon.png'),
+    new HtmlWebpackPlugin({
+      inject: false,
+      template: './index.html'
+    })
   ]
 };
 
@@ -44,28 +52,24 @@ if (NODE_ENV === 'development') {
     { test: /\.js$/, exclude: /node_modules/, loaders: ['react-hot', 'babel-loader'] },
     { test: /\.css$/, loader: `style-loader!${styleLoader}` }
   );
-  config.plugins = [
+  config.plugins.push(
     new webpack.HotModuleReplacementPlugin()
-  ];
+  );
 } else {
   config.module.loaders.push(
     { test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader'] },
     { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', styleLoader) }
   );
-  config.plugins = [
+  config.plugins.push(
     new ExtractTextPlugin('app.css', { allChunks: true }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new HtmlWebpackPlugin({
-      inject: false,
-      template: './index.html'
-    }),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
       compress: { warnings: false },
       mangle: true
     })
-  ];
+  );
 }
 
 module.exports = config;
